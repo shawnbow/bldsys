@@ -1,5 +1,5 @@
 #!/bin/bash -
-TARGET_BRANCH="${TARGET_BRANCH-infthink-netcast1.0}"
+TARGET_BRANCH="${TARGET_BRANCH-infthink-netcast1.0-bunble}"
 SRC_DIR=~/$TARGET_BRANCH
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log

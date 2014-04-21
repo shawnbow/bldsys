@@ -1,5 +1,5 @@
 #!/bin/bash -
-TARGET_BRANCH="${TARGET_BRANCH-infthink-netcast1.0}"
+TARGET_BRANCH="${TARGET_BRANCH-infthink-netcast1.0-bunble}"
 SRC_DIR=~/workdir/netcast
 DATE_TIME=$(date +%Y%m%d.%H%M%S)
 
@@ -53,4 +53,4 @@ $(android_app_build "cast_videos_sender_android" "$SRC_DIR/netcast/app/cast_vide
 $(android_app_build "itmc" "$SRC_DIR/netcast/app/itmc" "release")
 $(android_app_build "cast_sender_sample_ts" "$SRC_DIR/netcast/sw/android/android-sample-sender" "debug")
 $(android_app_build "fireflycast" "$SRC_DIR/netcast/sw/android/trails/WifiSetup/WifiSetting" "release")
-
+$(android_app_build "super_cast_player" "$SRC_DIR/netcast/app/super_cast_player" "debug")
