@@ -21,7 +21,7 @@ def send_mail(to_list, sub, content=None, att_path=None):
     if (att_path != None):
         att1 = MIMEText(open(att_path, 'rb').read(), 'base64', 'utf8')
         att1["Content-Type"] = 'application/octet-stream'
-        att1["Content-Disposition"] = 'attachment; filename="build_error.log"'#这里的filename可以任意写，写什么名字，邮件中显示什么名字
+        att1["Content-Disposition"] = 'attachment; filename="part_error.log"'#这里的filename可以任意写，写什么名字，邮件中显示什么名字
         msg.attach(att1)
 
     if (content != None):

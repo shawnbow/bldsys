@@ -35,7 +35,7 @@ cd $SRC_DIR/netcast/os
 
 if [[ $? -ne 0 ]]; then
     error_log
-    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build failed" "Full log address: smb://10.0.0.201/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
+    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH os build failed" "Full log address: smb://10.0.0.201/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
     exit 1 
 fi
 
@@ -79,7 +79,7 @@ ant $BUILD_TYPE >> $APP_FULL_LOG
 
 if [[ $? -ne 0 ]]; then
     app_error_log
-    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build failed" "Full log address: smb://10.0.0.201/cm/log/$APP_ERROR_LOG_FILE" "$APP_PART_LOG"
+    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH app build failed" "Full log address: smb://10.0.0.201/cm/log/$APP_ERROR_LOG_FILE" "$APP_PART_LOG"
     exit 1
 fi
 
@@ -98,4 +98,4 @@ $(android_app_build "cast_sender_sample_ts" "$SRC_DIR/netcast/sw/android/android
 $(android_app_build "fireflycast" "$SRC_DIR/netcast/sw/android/trails/WifiSetup/WifiSetting" "release")
 $(android_app_build "super_cast_player" "$SRC_DIR/netcast/app/super_cast_player" "debug")
 
-/opt/tools/bldsys/mailto "$TARGET_BRANCH build successfully" "Please get build from smb://10.0.0.202/cm/netcast/$DATE_TIME/"
+/opt/tools/bldsys/mailto "$TARGET_BRANCH full build successfully" "Please get build from smb://10.0.0.202/cm/netcast/$DATE_TIME/"
