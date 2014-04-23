@@ -11,7 +11,7 @@ export PATH=/home/it/scrapy/bin:/var/lib/gems/1.9.1/bin:/var/lib/gems/1.8/bin:/o
 error_log()
 {
 echo -e "full log address:\n" >> $PART_LOG
-echo "smb://10.0.0.201/cm/log/$ERROR_LOG_FILE" >> $PART_LOG
+echo "smb://10.0.0.201/public/cm/log/$ERROR_LOG_FILE" >> $PART_LOG
 echo -e "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> last 100 lines\n" >> $PART_LOG
 
 tail -n 100 $FULL_LOG >> $PART_LOG
@@ -35,7 +35,7 @@ cd $SRC_DIR/netcast/os
 
 if [[ $? -ne 0 ]]; then
     error_log
-    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH os build failed" "Full log address: smb://10.0.0.201/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
+    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH os build failed" "Full log address: smb://10.0.0.201/public/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
     exit 1 
 fi
 
@@ -54,7 +54,7 @@ APP_ERROR_LOG_FILE=build-app-error-$DATE_TIME.log
 app_error_log()
 {
 echo -e "Full log address:\n" >> $APP_PART_LOG
-echo "smb://10.0.0.201/cm/log/$APP_ERROR_LOG_FILE" >> $APP_PART_LOG
+echo "smb://10.0.0.201/public/cm/log/$APP_ERROR_LOG_FILE" >> $APP_PART_LOG
 echo -e "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> last 100 lines\n" >> $APP_PART_LOG
 
 tail -n 100 $APP_FULL_LOG >> $APP_PART_LOG
@@ -79,7 +79,7 @@ ant $BUILD_TYPE >> $APP_FULL_LOG
 
 if [[ $? -ne 0 ]]; then
     app_error_log
-    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH app build failed" "Full log address: smb://10.0.0.201/cm/log/$APP_ERROR_LOG_FILE" "$APP_PART_LOG"
+    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH app build failed" "Full log address: smb://10.0.0.201/public/cm/log/$APP_ERROR_LOG_FILE" "$APP_PART_LOG"
     exit 1
 fi
 

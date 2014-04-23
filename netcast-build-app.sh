@@ -12,7 +12,7 @@ export PATH=/home/it/scrapy/bin:/var/lib/gems/1.9.1/bin:/var/lib/gems/1.8/bin:/o
 app_error_log()
 {
 echo -e "Full log address:\n" >> $APP_PART_LOG
-echo "smb://10.0.0.201/cm/log/$APP_ERROR_LOG_FILE" >> $APP_PART_LOG
+echo "smb://10.0.0.201/public/cm/log/$APP_ERROR_LOG_FILE" >> $APP_PART_LOG
 echo -e "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> last 100 lines\n" >> $APP_PART_LOG
 
 tail -n 100 $APP_FULL_LOG >> $APP_PART_LOG
