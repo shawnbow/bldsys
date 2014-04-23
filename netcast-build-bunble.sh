@@ -98,4 +98,4 @@ $(android_app_build "cast_sender_sample_ts" "$SRC_DIR/netcast/sw/android/android
 $(android_app_build "fireflycast" "$SRC_DIR/netcast/sw/android/trails/WifiSetup/WifiSetting" "release")
 $(android_app_build "super_cast_player" "$SRC_DIR/netcast/app/super_cast_player" "debug")
 
-/opt/tools/bldsys/mailto "$TARGET_BRANCH full build successfully" "Please get build from smb://10.0.0.202/cm/netcast/$DATE_TIME/"
+/opt/tools/bldsys/mailto.py "$TARGET_BRANCH full build successfully" "Please get build from smb://10.0.0.202/cm/netcast/$DATE_TIME/"
