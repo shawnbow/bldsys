@@ -28,7 +28,7 @@ cd $SRC_DIR/.repo && rm -rf manifest* project.list
 cd $SRC_DIR
 
 repo init -u appler:netcast/manifests.git -b $TARGET_BRANCH --repo-url=appler:tools/repo.git >> repo.log 2>&1
-repo sync >> repo.log 2>&1
+repo sync -d >> repo.log 2>&1
 
 cd $SRC_DIR/netcast/os
 ./rkst/mkimage.sh 8 -j8 >> $FULL_LOG 2>&1
