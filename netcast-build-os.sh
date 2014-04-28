@@ -1,16 +1,16 @@
 #!/bin/bash -
-TARGET_BRANCH="${TARGET_BRANCH-infthink-netcast1.0-bunble}"
+TARGET_BRANCH="${TARGET_BRANCH-infthink-firefly2.0}"
 SRC_DIR=~/$TARGET_BRANCH
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
 DATE_TIME=$(date +%Y%m%d.%H%M%S)
-ERROR_LOG_FILE=build-error-$DATE_TIME.log
+ERROR_LOG_FILE=$TARGET_BRANCH-build-error-$DATE_TIME.log
 export PATH=/home/it/scrapy/bin:/var/lib/gems/1.9.1/bin:/var/lib/gems/1.8/bin:/opt/android/android-ndk-r9d:/opt/android/adt/sdk/tools:/opt/android/adt/sdk/platform-tools:/opt/android/adt/sdk/build-tools/android-4.4.2:/opt/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 [[ $1 == -d ]] && export IS_DEBUG=yes
 
 error_log()
 {
-echo -e "full log address:\n" >> $PART_LOG
+echo -e "Full log address:\n" >> $PART_LOG
 echo "smb://10.0.0.201/public/cm/log/$ERROR_LOG_FILE" >> $PART_LOG
 echo -e "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> last 100 lines\n" >> $PART_LOG
 
@@ -41,7 +41,7 @@ fi
 cd $SRC_DIR
 repo manifest -r -o manifest.xml
 
-[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/netcast/$DATE_TIME/ &&
+[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/ &&
     cd $SRC_DIR &&
-    sudo cp -r manifest.xml $SRC_DIR/netcast/os/rockdev/* /mnt/public/cm/netcast/$DATE_TIME/
+    sudo cp -r manifest.xml $SRC_DIR/netcast/os/rockdev/* /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 

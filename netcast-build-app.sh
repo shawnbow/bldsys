@@ -5,7 +5,7 @@ DATE_TIME=$(date +%Y%m%d.%H%M%S)
 
 APP_FULL_LOG=$SRC_DIR/build_app.log
 APP_PART_LOG=$SRC_DIR/build_app_part.log
-APP_ERROR_LOG_FILE=build-app-error-$DATE_TIME.log
+APP_ERROR_LOG_FILE=$TARGET_BRANCH-build-app-error-$DATE_TIME.log
 
 export PATH=/home/it/scrapy/bin:/var/lib/gems/1.9.1/bin:/var/lib/gems/1.8/bin:/opt/android/android-ndk-r9d:/opt/android/adt/sdk/tools:/opt/android/adt/sdk/platform-tools:/opt/android/adt/sdk/build-tools/android-4.4.2:/opt/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 
@@ -40,8 +40,8 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-sudo mkdir -p /mnt/public/cm/netcast/$DATE_TIME/app/
-sudo cp $PROJECT_PATH/bin/$PROJECT_NAME-$BUILD_TYPE.apk /mnt/public/cm/netcast/$DATE_TIME/app/
+sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/app/
+sudo cp $PROJECT_PATH/bin/$PROJECT_NAME-$BUILD_TYPE.apk /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/app/
 }
 
 $(android_app_build "cast_sdk_android" "$SRC_DIR/netcast/app/cast_sdk_android" "release")
