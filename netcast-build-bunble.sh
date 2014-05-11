@@ -43,8 +43,8 @@ cd $SRC_DIR
 repo manifest -r -o manifest.xml
 
 [[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/ &&
-    cd $SRC_DIR &&
-    sudo cp -r manifest.xml $SRC_DIR/netcast/os/rockdev/* /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+    cd $SRC_DIR/netcast/os/rockdev && zip -r image.zip Image/* &&
+    sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/netcast/os/rockdev/image.zip /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 
 ## Build Apps
 APP_FULL_LOG=$SRC_DIR/build_app.log
