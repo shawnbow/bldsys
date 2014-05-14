@@ -1,5 +1,5 @@
 #!/bin/bash -
-TARGET_BRANCH="${TARGET_BRANCH-infthink-netcast1.0-bunble}"
+TARGET_BRANCH="${TARGET_BRANCH-infthink-firefly2.0-bunble}"
 SRC_DIR=~/workdir/netcast
 DATE_TIME=$(date +%Y%m%d.%H%M%S)
 
