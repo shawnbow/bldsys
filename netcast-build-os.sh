@@ -3,7 +3,7 @@ TARGET_BRANCH="${TARGET_BRANCH-infthink-firefly2.0}"
 SRC_DIR=~/$TARGET_BRANCH
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
-DATE_TIME=$(date +%Y%m%d.%H%M%S)
+DATE_TIME=$(date +%Y%m%d%H%M)
 ERROR_LOG_FILE=$TARGET_BRANCH-build-error-$DATE_TIME.log
 export PATH=/home/it/scrapy/bin:/var/lib/gems/1.9.1/bin:/var/lib/gems/1.8/bin:/opt/android/android-ndk-r9d:/opt/android/adt/sdk/tools:/opt/android/adt/sdk/platform-tools:/opt/android/adt/sdk/build-tools/android-4.4.2:/opt/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 [[ $1 == -d ]] && export IS_DEBUG=yes
@@ -41,6 +41,6 @@ fi
 cd $SRC_DIR
 repo manifest -r -o manifest.xml
 
-[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/ &&
+[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/debug/$DATE_TIME/ &&
     cd $SRC_DIR/netcast/os/rockdev && zip -r image.zip Image/* &&
-    sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/netcast/os/rockdev/image.zip /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+    sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/netcast/os/rockdev/image.zip /mnt/public/cm/$TARGET_BRANCH/debug/$DATE_TIME/
