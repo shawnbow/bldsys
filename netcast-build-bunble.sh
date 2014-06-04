@@ -4,8 +4,8 @@ SRC_DIR=~/$TARGET_BRANCH
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
 DATE_TIME=$(date +%Y%m%d%H%M)
-PLATFORM=firefly
 ERROR_LOG_FILE=$TARGET_BRANCH-build-error-$DATE_TIME.log
+export USER=it
 export PATH=/home/it/scrapy/bin:/var/lib/gems/1.9.1/bin:/var/lib/gems/1.8/bin:/opt/android/android-ndk-r9d:/opt/android/adt/sdk/tools:/opt/android/adt/sdk/platform-tools:/opt/android/adt/sdk/build-tools/android-4.4.2:/opt/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 [[ $1 == -d ]] && export IS_DEBUG=yes
 
@@ -32,7 +32,7 @@ repo init -u appler:netcast/manifests.git -b $TARGET_BRANCH --repo-url=appler:to
 repo sync -d >> repo.log 2>&1
 
 cd $SRC_DIR/netcast/os
-./rkst/mkimageota.sh 8 -j8 >> $FULL_LOG 2>&1
+PLATFORM_ID=Firefly VERSION_CODE=$DATE_TIME ./rkst/mkimageota.sh 8 -j8 >> $FULL_LOG 2>&1
 
 if [[ $? -ne 0 ]]; then
     error_log

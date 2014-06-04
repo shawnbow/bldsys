@@ -5,3 +5,4 @@ LOG_FILE=build-error-$DATE_TIME.log
 echo $LOG_FILE
 echo $DATE_TIME
 echo $DATE_TIME
+./sandbox1.sh
