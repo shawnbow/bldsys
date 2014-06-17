@@ -99,7 +99,7 @@ $(android_app_build "PullToRefresh" "$SRC_DIR/netcast/app/itmc/lib_source/PullTo
 $(android_app_build "netcast_sdk_android" "$SRC_DIR/netcast/sw/android/cast_sdk_android" "release")
 
 # netcast1.0 app build
-$(android_app_build "firefly" "$SRC_DIR/netcast/sw/android/trails/WifiSetup/WifiSetting" "release")
+$(android_app_build "CastAway" "$SRC_DIR/netcast/sw/android/trails/WifiSetup/WifiSetting" "release")
 $(android_app_build "cast_sender_sample_ts" "$SRC_DIR/netcast/sw/android/android-sample-sender" "debug")
 $(android_app_build "super_cast_player" "$SRC_DIR/netcast/app/super_cast_player" "debug")
 
