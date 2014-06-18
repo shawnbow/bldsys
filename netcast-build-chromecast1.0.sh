@@ -1,6 +1,7 @@
 #!/bin/bash -
 TARGET_BRANCH="${TARGET_BRANCH-infthink-firefly2.0}"
 SRC_DIR=~/$TARGET_BRANCH
+DEBUG_INFO=chromecast1.0
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
 DATE_TIME=$(date +%Y%m%d%H%M)
@@ -31,6 +32,9 @@ cd $SRC_DIR
 repo init -u appler:netcast/manifests.git -b $TARGET_BRANCH --repo-url=appler:tools/repo.git >> repo.log 2>&1
 repo sync -d >> repo.log 2>&1
 
+# Swtich to debug branch 
+cd $SRC_DIR/netcast/os/frameworks/base; git checkout origin/infthink/sandbox/chromecast1.0
+
 cd $SRC_DIR/netcast/os
 PLATFORM_ID=Firefly VERSION_CODE=$DATE_TIME ./rkst/mkimageota.sh 8 -j8 >> $FULL_LOG 2>&1
 
@@ -42,6 +46,6 @@ fi
 cd $SRC_DIR
 repo manifest -r -o manifest.xml
 
-[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/debug/$DATE_TIME/ &&
+[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DEBUG_INFO/$DATE_TIME/ &&
     cd $SRC_DIR/netcast/os/rockdev && zip -r image.zip Image/* &&
-    sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/netcast/os/rockdev/*.zip /mnt/public/cm/$TARGET_BRANCH/debug/$DATE_TIME/
+    sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/netcast/os/rockdev/*.zip /mnt/public/cm/$TARGET_BRANCH/$DEBUG_INFO/$DATE_TIME/
