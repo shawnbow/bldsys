@@ -34,7 +34,7 @@ repo sync -d >> repo.log 2>&1
 
 # Swtich to debug branch 
 cd $SRC_DIR/netcast/os/frameworks/base; git checkout origin/infthink/sandbox/experimental
-cd $SRC_DIR/netcast/os/gaia; git checkout origin/infthink/sandbox/experimental
+#cd $SRC_DIR/netcast/os/gaia; git checkout origin/infthink/sandbox/experimental
 
 cd $SRC_DIR/netcast/os
 PLATFORM_ID=Firefly VERSION_CODE=$DATE_TIME ./rkst/mkimageota.sh 8 -j8 >> $FULL_LOG 2>&1

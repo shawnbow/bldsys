@@ -52,14 +52,9 @@ $(android_app_build "CastCompanionLibrary" "$SRC_DIR/netcast/app/cast_videos_sen
 $(android_app_build "it-base" "$SRC_DIR/netcast/app/it-base" "release")
 $(android_app_build "vitamio" "$SRC_DIR/netcast/app/itmc/lib_source/vitamio" "release")
 $(android_app_build "PullToRefresh" "$SRC_DIR/netcast/app/itmc/lib_source/PullToRefresh-library" "release")
-$(android_app_build "netcast_sdk_android" "$SRC_DIR/netcast/sw/android/cast_sdk_android" "release")
-
-# netcast1.0 app build
-$(android_app_build "CastAway" "$SRC_DIR/netcast/sw/android/trails/WifiSetup/WifiSetting" "release")
-$(android_app_build "cast_sender_sample_ts" "$SRC_DIR/netcast/sw/android/android-sample-sender" "debug")
-$(android_app_build "super_cast_player" "$SRC_DIR/netcast/app/super_cast_player" "debug")
 
 # firefly2.0 app build
+$(android_app_build "matchfling" "$SRC_DIR/netcast/app/fling_setting_android" "release")
 $(android_app_build "itmc" "$SRC_DIR/netcast/app/itmc" "release")
 $(android_app_build "cast_videos_sender_android" "$SRC_DIR/netcast/app/cast_videos_sender_android" "debug")
 $(android_app_build "cast_tictactoe_android" "$SRC_DIR/netcast/app/cast_tictactoe_android" "debug")
