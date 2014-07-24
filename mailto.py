@@ -10,7 +10,7 @@ from email.mime.multipart import MIMEMultipart
 
 msg = MIMEMultipart()
 
-mailto_list=["it@infthink.com","bz@infthink.com","wanghewei@infthink.com"] 
+mailto_list=["it@infthink.com","bz@infthink.com","wanghewei@infthink.com","nbc@infthink.com"] 
 mail_host="smtp.exmail.qq.com"  #SMTP server
 mail_user="it@infthink.com"     #User
 mail_pass="infthink2014"        #Password

@@ -1,5 +1,5 @@
 #!/bin/bash
-TARGET_BRANCH="${TARGET_BRANCH-flingone-b2g2.0}"
+TARGET_BRANCH="${TARGET_BRANCH-infthink-flingone-b2g2.0}"
 SRC_DIR=~/build/$TARGET_BRANCH
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
@@ -24,14 +24,26 @@ echo -e "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> error filter end\n" >>
 sudo cp $FULL_LOG /mnt/public/cm/log/$ERROR_LOG_FILE
 }
 
+modify_prop()
+{
+PROP_KEY=$1
+PROP_VALUE=$2
+PROP_FILE=$3
+sed -i "s/\($PROP_KEY\).*$/\1 = $PROP_VALUE \\\/" $PROP_FILE
+}
+
 cd $SRC_DIR && rm -rf * || git clone appler:flingone/B2G-FlingOne $SRC_DIR
 cd $SRC_DIR && git reset --hard && git fetch origin && git checkout master
 cd $SRC_DIR/.repo && rm -rf manifest* project.list
 cd $SRC_DIR
-GITREPO='appler:flingone/b2g-manifest' BRANCH=infthink/$TARGET_BRANCH REPO_INIT_FLAGS='--repo-url=appler:tools/repo.git' ./config.sh -d rk30sdk >> repo.log 2>&1
+GITREPO='appler:flingone/b2g-manifest' BRANCH=infthink/flingone-b2g2.0 REPO_INIT_FLAGS='--repo-url=appler:tools/repo.git' ./config.sh -d rk30sdk >> repo.log 2>&1
 
-source load-config.sh
-./build.sh >> $FULL_LOG 2>&1
+#source load-config.sh
+BUILD_PROP=$SRC_DIR/device/rockchip/rk30sdk/rk30sdk.mk
+$(modify_prop "ro.product.platform" "MatchStick" $BUILD_PROP)
+$(modify_prop "ro.product.version" $DATE_TIME $BUILD_PROP)
+
+MAKE_OTAPACKAGE=1 ./build.sh >> $FULL_LOG 2>&1 && ./flash.sh >> $FULL_LOG 2>&1
 
 if [[ $? -ne 0 ]]; then
     error_log
@@ -39,33 +51,13 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-modify_prop()
-{
-PROP_KEY=$1
-PROP_VALUE=$2
-PROP_FILE=$3
-if [ -z "`grep $PROP_KEY $PROP_FILE`" ]
-then
-    echo $PROP_KEY=$PROP_VALUE >> $PROP_FILE
-else
-    sed -i "s/\($PROP_KEY\).*$/\1=$PROP_VALUE/" $PROP_FILE
-fi
-}
+cd $SRC_DIR && repo manifest -r -o manifest.xml
+cp -a $SRC_DIR/out/target/product/rk30sdk/obj/PACKAGING/target_files_intermediates/*.zip $SRC_DIR/rockdev/ &&
+cp -a $SRC_DIR/out/target/product/rk30sdk/*.zip $SRC_DIR/rockdev/ &&
+cd $SRC_DIR/rockdev && zip -r image.zip Image/* && cd $SRC_DIR
 
-BUILD_PROP=$SRC_DIR/out/target/product/$DEVICE/system/build.prop
-$(modify_prop "ro.product.platform" "MatchStick" $BUILD_PROP)
-$(modify_prop "ro.product.version" $DATE_TIME $BUILD_PROP)
+[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/ &&
+    sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/rockdev/*.zip /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 
-./flash.sh
+[[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH full build successfully" "Please get build from smb://10.0.0.202/cm/$TARGET_BRANCH/$DATE_TIME/"
 
-#if [[ $? -ne 0 ]]; then
-#    error_log
-#    exit 1 
-#fi
-
-#cd $SRC_DIR
-#repo manifest -r -o manifest.xml
-
-#[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/debug/$DATE_TIME/ &&
-#    cd $SRC_DIR/netcast/os/rockdev && zip -r image.zip Image/* &&
-#    sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/netcast/os/rockdev/*.zip /mnt/public/cm/$TARGET_BRANCH/debug/$DATE_TIME/
