@@ -1,5 +1,5 @@
-#!/bin/bash -
-TARGET_BRANCH="${TARGET_BRANCH-infthink-firefly2.0}"
+#!/bin/bash
+TARGET_BRANCH="${TARGET_BRANCH-flingone-b2g2.0}"
 SRC_DIR=~/build/$TARGET_BRANCH
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
@@ -24,24 +24,23 @@ echo -e "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> error filter end\n" >>
 sudo cp $FULL_LOG /mnt/public/cm/log/$ERROR_LOG_FILE
 }
 
-cd $SRC_DIR && rm -rf * || mkdir -p $SRC_DIR
+cd $SRC_DIR && rm -rf * || git clone appler:flingone/B2G-FlingOne $SRC_DIR
+cd $SRC_DIR && git reset --hard && git fetch origin && git checkout master
 cd $SRC_DIR/.repo && rm -rf manifest* project.list
 cd $SRC_DIR
+GITREPO='appler:flingone/b2g-manifest' BRANCH=infthink/$TARGET_BRANCH REPO_INIT_FLAGS='--repo-url=appler:tools/repo.git' ./config.sh -d rk30sdk >> repo.log 2>&1
 
-repo init -u appler:netcast/manifests.git -b $TARGET_BRANCH --repo-url=appler:tools/repo.git >> repo.log 2>&1
-repo sync -d >> repo.log 2>&1
+#cd $SRC_DIR/netcast/os
+#PLATFORM_ID=Firefly VERSION_CODE=$DATE_TIME ./rkst/mkimageota.sh 8 -j8 >> $FULL_LOG 2>&1
 
-cd $SRC_DIR/netcast/os
-PLATFORM_ID=Firefly VERSION_CODE=$DATE_TIME ./rkst/mkimageota.sh 8 -j8 >> $FULL_LOG 2>&1
+#if [[ $? -ne 0 ]]; then
+#    error_log
+#    exit 1 
+#fi
 
-if [[ $? -ne 0 ]]; then
-    error_log
-    exit 1 
-fi
+#cd $SRC_DIR
+#repo manifest -r -o manifest.xml
 
-cd $SRC_DIR
-repo manifest -r -o manifest.xml
-
-[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/debug/$DATE_TIME/ &&
-    cd $SRC_DIR/netcast/os/rockdev && zip -r image.zip Image/* &&
-    sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/netcast/os/rockdev/*.zip /mnt/public/cm/$TARGET_BRANCH/debug/$DATE_TIME/
+#[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/debug/$DATE_TIME/ &&
+#    cd $SRC_DIR/netcast/os/rockdev && zip -r image.zip Image/* &&
+#    sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/netcast/os/rockdev/*.zip /mnt/public/cm/$TARGET_BRANCH/debug/$DATE_TIME/

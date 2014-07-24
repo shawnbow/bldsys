@@ -1,6 +1,6 @@
 #!/bin/bash -
 TARGET_BRANCH="${TARGET_BRANCH-infthink-firefly2.0-bunble}"
-SRC_DIR=~/$TARGET_BRANCH
+SRC_DIR=~/build/$TARGET_BRANCH
 DATE_TIME=$(date +%Y%m%d%H%M)
 
 APP_FULL_LOG=$SRC_DIR/build_app.log
