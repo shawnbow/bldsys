@@ -12,7 +12,7 @@ export PATH=/opt/jdk1.6.0_45/bin:/home/it/scrapy/bin:/var/lib/gems/1.9.1/bin:/va
 error_log()
 {
 echo -e "Full log address:\n" >> $PART_LOG
-echo "smb://10.0.0.201/public/cm/log/$ERROR_LOG_FILE" >> $PART_LOG
+echo "http://office.infthink.com/cm/log/$ERROR_LOG_FILE" >> $PART_LOG
 echo -e "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> last 100 lines\n" >> $PART_LOG
 
 tail -n 100 $FULL_LOG >> $PART_LOG

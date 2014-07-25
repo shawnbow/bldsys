@@ -12,7 +12,7 @@ export PATH=/opt/jdk1.6.0_45/bin:/home/it/scrapy/bin:/var/lib/gems/1.9.1/bin:/va
 error_log()
 {
 echo -e "Full log address:\n" >> $PART_LOG
-echo "smb://10.0.0.201/public/cm/log/$ERROR_LOG_FILE" >> $PART_LOG
+echo "http://office.infthink.com/cm/log/$ERROR_LOG_FILE" >> $PART_LOG
 echo -e "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> last 100 lines\n" >> $PART_LOG
 
 tail -n 100 $FULL_LOG >> $PART_LOG
@@ -36,7 +36,7 @@ PLATFORM_ID=Firefly VERSION_CODE=$DATE_TIME ./rkst/mkimageota.sh 8 -j8 >> $FULL_
 
 if [[ $? -ne 0 ]]; then
     error_log
-    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH os build failed" "Full log address: smb://10.0.0.201/public/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
+    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH os build failed" "Full log address: http://office.infthink.com/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
     exit 1 
 fi
 
@@ -55,7 +55,7 @@ APP_ERROR_LOG_FILE=$TARGET_BRANCH-build-app-error-$DATE_TIME.log
 app_error_log()
 {
 echo -e "Full log address:\n" >> $APP_PART_LOG
-echo "smb://10.0.0.201/public/cm/log/$APP_ERROR_LOG_FILE" >> $APP_PART_LOG
+echo "http://office.infthink.com/cm/log/$APP_ERROR_LOG_FILE" >> $APP_PART_LOG
 echo -e "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> last 100 lines\n" >> $APP_PART_LOG
 
 tail -n 100 $APP_FULL_LOG >> $APP_PART_LOG
@@ -80,7 +80,7 @@ ant $BUILD_TYPE >> $APP_FULL_LOG
 
 if [[ $? -ne 0 ]]; then
     app_error_log
-    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH app build failed" "Full log address: smb://10.0.0.201/public/cm/log/$APP_ERROR_LOG_FILE" "$APP_PART_LOG"
+    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH app build failed" "Full log address: http://office.infthink.com/cm/log/$APP_ERROR_LOG_FILE" "$APP_PART_LOG"
     exit 1
 fi
 
@@ -103,4 +103,4 @@ $(android_app_build "itmc" "$SRC_DIR/netcast/app/itmc" "release")
 $(android_app_build "cast_videos_sender_android" "$SRC_DIR/netcast/app/cast_videos_sender_android" "debug")
 $(android_app_build "cast_tictactoe_android" "$SRC_DIR/netcast/app/cast_tictactoe_android" "debug")
 
-[[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH full build successfully" "Please get build from smb://10.0.0.202/cm/$TARGET_BRANCH/$DATE_TIME/"
+[[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH full build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/$DATE_TIME/"

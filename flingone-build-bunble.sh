@@ -12,7 +12,7 @@ export PATH=/opt/jdk1.6.0_45/bin:/home/it/scrapy/bin:/var/lib/gems/1.9.1/bin:/va
 error_log()
 {
 echo -e "Full log address:\n" >> $PART_LOG
-echo "smb://10.0.0.201/public/cm/log/$ERROR_LOG_FILE" >> $PART_LOG
+echo "http://office.infthink.com/cm/log/$ERROR_LOG_FILE" >> $PART_LOG
 echo -e "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> last 100 lines\n" >> $PART_LOG
 
 tail -n 100 $FULL_LOG >> $PART_LOG
@@ -47,17 +47,15 @@ MAKE_OTAPACKAGE=1 ./build.sh >> $FULL_LOG 2>&1 && ./flash.sh >> $FULL_LOG 2>&1
 
 if [[ $? -ne 0 ]]; then
     error_log
-    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH os build failed" "Full log address: smb://10.0.0.201/public/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
+    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH os build failed" "Full log address: http://office.infthink.com/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
     exit 1
 fi
 
 cd $SRC_DIR && repo manifest -r -o manifest.xml
-cp -a $SRC_DIR/out/target/product/rk30sdk/obj/PACKAGING/target_files_intermediates/*.zip $SRC_DIR/rockdev/ &&
-cp -a $SRC_DIR/out/target/product/rk30sdk/*.zip $SRC_DIR/rockdev/ &&
-cd $SRC_DIR/rockdev && zip -r image.zip Image/* && cd $SRC_DIR
+cd $SRC_DIR && zip -r $TARGET_BRANCH-$DATE_TIME.zip rockdev/* && cd $SRC_DIR
 
-[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/ &&
-    sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/rockdev/*.zip /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/ && 
+sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/$TARGET_BRANCH-$DATE_TIME.zip $SRC_DIR/out/target/product/rk30sdk/obj/PACKAGING/target_files_intermediates/*.zip $SRC_DIR/out/target/product/rk30sdk/*.zip /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 
-[[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH full build successfully" "Please get build from smb://10.0.0.202/cm/$TARGET_BRANCH/$DATE_TIME/"
+[[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH full build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/$DATE_TIME/"
 
