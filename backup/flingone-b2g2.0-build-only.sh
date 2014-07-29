@@ -1,5 +1,5 @@
 #!/bin/bash
-TARGET_BRANCH="${TARGET_BRANCH-flingone-master}"
+TARGET_BRANCH="${TARGET_BRANCH-infthink-flingone-b2g2.0}"
 SRC_DIR=~/build/$TARGET_BRANCH
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
@@ -32,30 +32,30 @@ PROP_FILE=$3
 sed -i "s/\($PROP_KEY\).*$/\1 = $PROP_VALUE \\\/" $PROP_FILE
 }
 
-cd $SRC_DIR && rm -rf * || git clone https://github.com/flingone/B2G-FlingOne.git $SRC_DIR
-cd $SRC_DIR && git reset --hard && git fetch origin && git checkout master
-cd $SRC_DIR/.repo && rm -rf manifest* project.list
-cd $SRC_DIR
-REPO_INIT_FLAGS='--repo-url=appler:tools/repo.git' ./config.sh -d rk30sdk >> repo.log 2>&1
+#cd $SRC_DIR && rm -rf * || git clone appler:flingone/B2G-FlingOne $SRC_DIR
+#cd $SRC_DIR && git reset --hard && git fetch origin && git checkout master
+#cd $SRC_DIR/.repo && rm -rf manifest* project.list
+#cd $SRC_DIR
+#GITREPO='appler:flingone/b2g-manifest' BRANCH=infthink/flingone-b2g2.0 REPO_INIT_FLAGS='--repo-url=appler:tools/repo.git' ./config.sh -d rk30sdk >> repo.log 2>&1
 
 #source load-config.sh
-#BUILD_PROP=$SRC_DIR/device/rockchip/rk30sdk/rk30sdk.mk
-#$(modify_prop "ro.product.platform" "MatchStick" $BUILD_PROP)
-#$(modify_prop "ro.product.version" $DATE_TIME $BUILD_PROP)
+BUILD_PROP=$SRC_DIR/device/rockchip/rk30sdk/rk30sdk.mk
+$(modify_prop "ro.product.platform" "MatchStick" $BUILD_PROP)
+$(modify_prop "ro.product.version" $DATE_TIME $BUILD_PROP)
 
 ./build.sh >> $FULL_LOG 2>&1 && ./flash.sh >> $FULL_LOG 2>&1
 
-if [[ $? -ne 0 ]]; then
+if [ $? -ne 0 ]; then
     error_log
-    [[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH os build failed" "Full log address: http://office.infthink.com/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
+    [ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH os build failed" "Full log address: http://office.infthink.com/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
     exit 1
 fi
 
 cd $SRC_DIR && repo manifest -r -o manifest.xml
 cd $SRC_DIR && zip -r $TARGET_BRANCH-$DATE_TIME.zip rockdev/* && cd $SRC_DIR
 
-[[ -z $IS_DEBUG ]] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/ &&
-sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/$TARGET_BRANCH-$DATE_TIME.zip /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+[ -z $IS_DEBUG ] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/ && 
+sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/$TARGET_BRANCH-$DATE_TIME.zip $SRC_DIR/out/target/product/rk30sdk/obj/PACKAGING/target_files_intermediates/*.zip $SRC_DIR/out/target/product/rk30sdk/*.zip /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 
-[[ -z $IS_DEBUG ]] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH full build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/$DATE_TIME/"
+[ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/$DATE_TIME/"
 

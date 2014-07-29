@@ -1,5 +1,5 @@
 #!/bin/bash -
-TARGET_BRANCH="${TARGET_BRANCH-infthink-firefly2.0-bunble}"
+TARGET_BRANCH="${TARGET_BRANCH-infthink-firefly2.0}"
 SRC_DIR=~/build/$TARGET_BRANCH
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
