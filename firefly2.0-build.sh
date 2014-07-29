@@ -47,4 +47,4 @@ repo manifest -r -o manifest.xml
     cd $SRC_DIR/netcast/os/rockdev && zip -r image.zip Image/* &&
     sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/netcast/os/rockdev/*.zip /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 
-[ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto-debug.py "$TARGET_BRANCH build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/$DATE_TIME/"
+[ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/$DATE_TIME/"
