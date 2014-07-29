@@ -60,18 +60,18 @@ fi
 }
 
 # Library project build
-$(android_app_build "android-v7-appcompat" "$SRC_DIR/fling_sdk_android/lib_source/appcompat" "release")
-$(android_app_build "android-v7-mediarouter" "$SRC_DIR/fling_sdk_android/lib_source/mediarouter" "release")
-$(android_app_build "fling_sdk_android" "$SRC_DIR/fling_sdk_android" "release")
-$(android_app_build "CastCompanionLibrary" "$SRC_DIR/fling_videos_sender_android/lib_source/CastCompanionLibrary-android" "release")
-$(android_app_build "it-base" "$SRC_DIR/it-base" "release")
-$(android_app_build "vitamio" "$SRC_DIR/itmc/lib_source/vitamio" "release")
-$(android_app_build "PullToRefresh" "$SRC_DIR/itmc/lib_source/PullToRefresh-library" "release")
+android_app_build "android-v7-appcompat" "$SRC_DIR/fling_sdk_android/lib_source/appcompat" "release"
+android_app_build "android-v7-mediarouter" "$SRC_DIR/fling_sdk_android/lib_source/mediarouter" "release"
+android_app_build "fling_sdk_android" "$SRC_DIR/fling_sdk_android" "release"
+android_app_build "CastCompanionLibrary" "$SRC_DIR/fling_videos_sender_android/lib_source/CastCompanionLibrary-android" "release"
+android_app_build "it-base" "$SRC_DIR/it-base" "release"
+android_app_build "vitamio" "$SRC_DIR/itmc/lib_source/vitamio" "release"
+android_app_build "PullToRefresh" "$SRC_DIR/itmc/lib_source/PullToRefresh-library" "release"
 
 # app build
-$(android_app_build "matchstick" "$SRC_DIR/fling_setting_android" "release")
-$(android_app_build "itmc" "$SRC_DIR/itmc" "release")
-$(android_app_build "fling_videos_sender_android" "$SRC_DIR/fling_videos_sender_android" "debug")
-$(android_app_build "fling_tictactoe_android" "$SRC_DIR/fling_tictactoe_android" "debug")
+android_app_build "matchstick" "$SRC_DIR/fling_setting_android" "release"
+android_app_build "itmc" "$SRC_DIR/itmc" "release"
+android_app_build "fling_videos_sender_android" "$SRC_DIR/fling_videos_sender_android" "debug"
+android_app_build "fling_tictactoe_android" "$SRC_DIR/fling_tictactoe_android" "debug"
 
 [ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/$DATE_TIME/"

@@ -1,24 +1,22 @@
 #!/bin/bash -
-echo $(pwd)
-DATE_TIME=$(date +%Y%m%d.%H%M%S)
-export LOG_FILE=build-error-$DATE_TIME.log
-echo $LOG_FILE
-echo $DATE_TIME
-echo $DATE_TIME
-
 test_exit()
 {
-echo 'test_exit entry!'
-
-asdfasd
-
-if [ $? -ne 0 ]; then
-  echo 'error'
-fi
+echo 'want to seee'
+#exit 1
+echo 'exit ...'
 }
 
-test_exit
-
-[ -z $1 ] && echo 'aaaaaa'
+$(test_exit)
+$(test_exit)
 
 echo 'end of'
+
+android_app_build()
+{
+echo 'ls -'
+exit 1
+}
+
+android_app_build
+android_app_build
+android_app_build
