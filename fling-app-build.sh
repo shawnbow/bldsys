@@ -56,7 +56,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-sudo cp $PROJECT_PATH/bin/$PROJECT_NAME-$BUILD_TYPE.apk /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+[ -z $IS_DEBUG ] && sudo cp $PROJECT_PATH/bin/$PROJECT_NAME-$BUILD_TYPE.apk /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 }
 
 # Library project build
