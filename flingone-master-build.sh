@@ -33,7 +33,7 @@ sed -i "s/\($PROP_KEY\).*$/\1 = $PROP_VALUE \\\/" $PROP_FILE
 }
 
 cd $SRC_DIR && rm -rf * || git clone https://github.com/flingone/B2G-FlingOne.git $SRC_DIR
-cd $SRC_DIR && git reset --hard && git fetch origin && git checkout master
+cd $SRC_DIR && git reset --hard && git fetch origin && git checkout origin/master
 cd $SRC_DIR/.repo && rm -rf manifest* project.list
 cd $SRC_DIR
 REPO_INIT_FLAGS='--repo-url=appler:tools/repo.git' ./config.sh -d rk30sdk >> repo.log 2>&1
