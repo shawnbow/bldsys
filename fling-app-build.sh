@@ -9,7 +9,7 @@ APP_PART_LOG=$SRC_DIR/build_app_part.log
 APP_ERROR_LOG_FILE=$TARGET_BRANCH-build-app-error-$DATE_TIME.log
 
 export USER=it
-export PATH=/opt/jdk1.6.0_45/bin:/home/it/scrapy/bin:/var/lib/gems/1.9.1/bin:/var/lib/gems/1.8/bin:/opt/android/android-ndk-r9d:/opt/android/adt/sdk/tools:/opt/android/adt/sdk/platform-tools:/opt/android/adt/sdk/build-tools/android-4.4.2:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+export PATH=/home/it/scrapy/bin:/var/lib/gems/1.9.1/bin:/var/lib/gems/1.8/bin:/opt/android/android-ndk-r9d:/opt/android/adt/sdk/tools:/opt/android/adt/sdk/platform-tools:/opt/android/adt/sdk/build-tools/android-4.4.2:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 [[ $1 == -d ]] && export IS_DEBUG=yes
 
 cd $SRC_DIR && rm -rf * || mkdir -p $SRC_DIR
@@ -73,5 +73,8 @@ android_app_build "matchstick" "$SRC_DIR/fling_setting_android" "release"
 android_app_build "itmc" "$SRC_DIR/itmc" "release"
 android_app_build "fling_videos_sender_android" "$SRC_DIR/fling_videos_sender_android" "debug"
 android_app_build "fling_tictactoe_android" "$SRC_DIR/fling_tictactoe_android" "debug"
+
+# Javascript compile
+cd $SRC_DIR && python closure-library/closure/bin/build/closurebuilder.py --root=closure-library/ --root=fling_sdk_receiver_js/project/ --namespace="fling.receiver" --output_mode=compiled --compiler_jar=fling_sdk_receiver_js/compiler.jar --output_file=fling_sdk_receiver_js/project/out/fling_receiver.js && sudo cp $SRC_DIR/fling_sdk_receiver_js/project/out/fling_receiver.js /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 
 [ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/$DATE_TIME/"
