@@ -57,6 +57,8 @@ if [ $? -ne 0 ]; then
 fi
 
 [ -z $IS_DEBUG ] && sudo cp $PROJECT_PATH/bin/$PROJECT_NAME-$BUILD_TYPE.apk /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+
+sudo cp $PROJECT_PATH/bin/itmc-1*.apk /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 }
 
 # Library project build
