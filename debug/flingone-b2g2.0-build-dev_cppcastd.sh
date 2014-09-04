@@ -36,7 +36,9 @@ cd $SRC_DIR && rm -rf * || git clone appler:flingone/B2G-FlingOne $SRC_DIR
 cd $SRC_DIR && git reset --hard && git fetch origin && git checkout origin/master
 cd $SRC_DIR/.repo && rm -rf manifest* project.list
 cd $SRC_DIR
-GITREPO='appler:flingone/b2g-manifest' BRANCH=infthink/flingone-b2g2.0-AP6234 REPO_INIT_FLAGS='--repo-url=appler:tools/repo.git' ./config.sh -d rk30sdk >> repo.log 2>&1
+GITREPO='appler:flingone/b2g-manifest' BRANCH=infthink/flingone-b2g2.0 REPO_INIT_FLAGS='--repo-url=appler:tools/repo.git' ./config.sh -d rk30sdk >> repo.log 2>&1
+
+cd $SRC_DIR/frameworks/base; git checkout caf/infthink/sandbox/dev_cppcastd; cd $SRC_DIR
 
 #source load-config.sh
 BUILD_PROP=$SRC_DIR/device/rockchip/rk30sdk/rk30sdk.mk
@@ -47,15 +49,15 @@ MAKE_OTAPACKAGE=1 ./build.sh >> $FULL_LOG 2>&1 && ./flash.sh >> $FULL_LOG 2>&1
 
 if [ $? -ne 0 ]; then
     error_log
-    [ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH debug AP6234 build failed" "Full log address: http://office.infthink.com/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
+    [ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH debug dev_cppcastd build failed" "Full log address: http://office.infthink.com/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
     exit 1
 fi
 
 cd $SRC_DIR && repo manifest -r -o manifest.xml
 cd $SRC_DIR && zip -r $TARGET_BRANCH-$DATE_TIME.zip rockdev/* && cd $SRC_DIR
 
-[ -z $IS_DEBUG ] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/debug/AP6234/$DATE_TIME/ && 
-sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/$TARGET_BRANCH-$DATE_TIME.zip $SRC_DIR/out/target/product/rk30sdk/obj/PACKAGING/target_files_intermediates/*.zip $SRC_DIR/out/target/product/rk30sdk/*.zip /mnt/public/cm/$TARGET_BRANCH/debug/AP6234/$DATE_TIME/
+[ -z $IS_DEBUG ] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/debug/dev_cppcastd/$DATE_TIME/ && 
+sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/$TARGET_BRANCH-$DATE_TIME.zip $SRC_DIR/out/target/product/rk30sdk/obj/PACKAGING/target_files_intermediates/*.zip $SRC_DIR/out/target/product/rk30sdk/*.zip /mnt/public/cm/$TARGET_BRANCH/debug/dev_cppcastd/$DATE_TIME/
 
-[ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH debug AP6234 build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/debug/AP6234/$DATE_TIME/"
+[ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH debug dev_cppcastd build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/debug/dev_cppcastd/$DATE_TIME/"
 
