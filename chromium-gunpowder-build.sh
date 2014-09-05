@@ -40,7 +40,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-cd $SRC_DIR/src; ninja -C out/Release chrome_shell_apk >> $FULL_LOG
+cd $SRC_DIR/src; ninja -C out/Release chrome_shell_apk -j4 >> $FULL_LOG
 if [ $? -ne 0 ]; then
     error_log
     [ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build failed" "Full log address: http://office.infthink.com/cm/log/$ERROR_LOG_FILE" "$PART_LOG"
