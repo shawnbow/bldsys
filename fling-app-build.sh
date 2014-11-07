@@ -58,7 +58,6 @@ fi
 
 [ -z $IS_DEBUG ] && sudo cp $PROJECT_PATH/bin/$PROJECT_NAME-$BUILD_TYPE.apk /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 
-sudo cp $PROJECT_PATH/bin/itmc-1*.apk /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 }
 
 # Library project build
@@ -67,16 +66,12 @@ android_app_build "android-v7-mediarouter" "$SRC_DIR/fling_sdk_android/lib_sourc
 android_app_build "fling_sdk_android" "$SRC_DIR/fling_sdk_android" "release"
 android_app_build "CastCompanionLibrary" "$SRC_DIR/fling_videos_sender_android/lib_source/CastCompanionLibrary-android" "release"
 android_app_build "it-base" "$SRC_DIR/it-base" "release"
-android_app_build "vitamio" "$SRC_DIR/itmc/lib_source/vitamio" "release"
-android_app_build "PullToRefresh" "$SRC_DIR/itmc/lib_source/PullToRefresh-library" "release"
 
 # app build
 android_app_build "matchstick" "$SRC_DIR/fling_setting_android" "release"
-android_app_build "itmc" "$SRC_DIR/itmc" "release"
 android_app_build "fling_videos_sender_android" "$SRC_DIR/fling_videos_sender_android" "debug"
-android_app_build "fling_tictactoe_android" "$SRC_DIR/fling_tictactoe_android" "debug"
 
 # Javascript compile
-cd $SRC_DIR && python closure-library/closure/bin/build/closurebuilder.py --root=closure-library/ --root=fling_sdk_receiver_js/project/ --namespace="fling.receiver" --output_mode=compiled --compiler_jar=fling_sdk_receiver_js/compiler.jar --output_file=fling_sdk_receiver_js/project/out/fling_receiver.js && sudo cp $SRC_DIR/fling_sdk_receiver_js/project/out/fling_receiver.js /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+#cd $SRC_DIR && python closure-library/closure/bin/build/closurebuilder.py --root=closure-library/ --root=fling_sdk_receiver_js/project/ --namespace="fling.receiver" --output_mode=compiled --compiler_jar=fling_sdk_receiver_js/compiler.jar --output_file=fling_sdk_receiver_js/project/out/fling_receiver.js && sudo cp $SRC_DIR/fling_sdk_receiver_js/project/out/fling_receiver.js /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 
 [ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/$DATE_TIME/"
