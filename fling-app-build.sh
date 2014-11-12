@@ -1,5 +1,5 @@
 #!/bin/bash
-TARGET_BRANCH="${TARGET_BRANCH-fling-app-master}"
+TARGET_BRANCH="${TARGET_BRANCH-matchstick-app}"
 SRC_DIR=~/build/$TARGET_BRANCH
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
@@ -16,8 +16,8 @@ cd $SRC_DIR && rm -rf * || mkdir -p $SRC_DIR
 cd $SRC_DIR/.repo && rm -rf manifest* project.list
 cd $SRC_DIR
 
-repo init -u appler:fling/app/manifests.git -b master --repo-url=appler:tools/repo.git >> repo.log 2>&1
-repo sync -d >> repo.log 2>&1
+repo init -u https://github.com/fling2flint/matchstick-app-manifest.git -b master --repo-url=appler:tools/repo.git >> repo.log 2>&1
+repo sync -d --no-clone-bundle  >> repo.log 2>&1
 
 repo manifest -r -o manifest.xml
 
@@ -58,17 +58,18 @@ fi
 
 [ -z $IS_DEBUG ] && sudo cp $PROJECT_PATH/bin/$PROJECT_NAME-$BUILD_TYPE.apk /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 
+sudo cp $PROJECT_PATH/bin/matchstick-settings-1*.apk /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 }
 
 # Library project build
-android_app_build "android-v7-appcompat" "$SRC_DIR/fling_sdk_android/lib_source/appcompat" "release"
-android_app_build "android-v7-mediarouter" "$SRC_DIR/fling_sdk_android/lib_source/mediarouter" "release"
-android_app_build "fling_sdk_android" "$SRC_DIR/fling_sdk_android" "release"
+android_app_build "android-v7-appcompat" "$SRC_DIR/flint-android-sender-sdk/lib_source/appcompat" "release"
+android_app_build "android-v7-mediarouter" "$SRC_DIR/flint-android-sender-sdk/lib_source/mediarouter" "release"
+android_app_build "flint-android-sender-sdk" "$SRC_DIR/flint-android-sender-sdk" "release"
 android_app_build "CastCompanionLibrary" "$SRC_DIR/fling_videos_sender_android/lib_source/CastCompanionLibrary-android" "release"
 android_app_build "it-base" "$SRC_DIR/it-base" "release"
 
 # app build
-android_app_build "matchstick" "$SRC_DIR/fling_setting_android" "release"
+android_app_build "matchstick-settings" "$SRC_DIR/matchstick-settings-android" "release"
 android_app_build "fling_videos_sender_android" "$SRC_DIR/fling_videos_sender_android" "debug"
 
 # Javascript compile
