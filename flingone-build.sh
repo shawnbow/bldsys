@@ -1,5 +1,5 @@
 #!/bin/bash
-TARGET_BRANCH="${TARGET_BRANCH-flingone-master}"
+TARGET_BRANCH="${TARGET_BRANCH-flingone}"
 SRC_DIR=~/build/$TARGET_BRANCH
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
