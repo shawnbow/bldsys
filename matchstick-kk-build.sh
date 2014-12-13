@@ -55,7 +55,7 @@ cd $SRC_DIR && repo manifest -r -o manifest.xml
 cd $SRC_DIR && zip -r $TARGET_BRANCH-$DATE_TIME.zip rockdev/* && cd $SRC_DIR
 
 [ -z $IS_DEBUG ] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/ && 
-sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/$TARGET_BRANCH-$DATE_TIME.zip $SRC_DIR/out/target/product/rk30sdk/obj/PACKAGING/target_files_intermediates/*.zip $SRC_DIR/out/target/product/rk30sdk/*.zip /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+sudo cp -r $SRC_DIR/manifest.xml $SRC_DIR/$TARGET_BRANCH-$DATE_TIME.zip $SRC_DIR/out/target/product/rk3066/obj/PACKAGING/target_files_intermediates/*.zip $SRC_DIR/out/target/product/rk3066/*.zip /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
 
 [ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/$DATE_TIME/"
 
