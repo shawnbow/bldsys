@@ -5,7 +5,7 @@ FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
 DATE_TIME=$(date +%Y%m%d%H%M)
 ERROR_LOG_FILE=$TARGET_BRANCH-build-error-$DATE_TIME.log
-DEST_DIR=cm/$TARGET_BRANCH/$DATE_TIME/
+DEST_DIR=cm/$TARGET_BRANCH/debug/partner-customized/$DATE_TIME
 export USER=it
 export PATH=/opt/jdk1.6.0_45/bin:/opt/node-v0.10.30/bin:/home/it/scrapy/bin:/var/lib/gems/1.9.1/bin:/var/lib/gems/1.8/bin:/opt/android/android-ndk-r9d:/opt/android/adt/sdk/tools:/opt/android/adt/sdk/platform-tools:/opt/android/adt/sdk/build-tools/android-4.4.2:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 [[ $1 == -d ]] && export IS_DEBUG=yes
@@ -40,9 +40,12 @@ cd $SRC_DIR
 BRANCH=matchstick REPO_INIT_FLAGS='--repo-url=appler:tools/repo.git' ./config.sh -d rk30sdk-kk >> repo.log 2>&1
 
 #source load-config.sh
-BUILD_PROP=$SRC_DIR/device/rockchip/rk3066/rk3066.mk
-$(modify_prop "ro.product.platform" "MATCHSTICK-KK" $BUILD_PROP)
-$(modify_prop "ro.product.version" $DATE_TIME $BUILD_PROP)
+#BUILD_PROP=$SRC_DIR/device/rockchip/rk3066/rk3066.mk
+#$(modify_prop "ro.product.platform" "MATCHSTICK-KK" $BUILD_PROP)
+#$(modify_prop "ro.product.version" $DATE_TIME $BUILD_PROP)
+
+cd $SRC_DIR/gaia; git checkout flingone/partner-customized; cd $SRC_DIR
+cd $SRC_DIR/frameworks/base/cmds/flingd-coffee; git checkout openflint/partner-customized; cd $SRC_DIR
 
 MAKE_OTAPACKAGE=1 ./build.sh >> $FULL_LOG 2>&1 && ./flash.sh >> $FULL_LOG 2>&1
 
