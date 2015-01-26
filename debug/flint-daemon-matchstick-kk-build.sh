@@ -40,9 +40,9 @@ cd $SRC_DIR
 BRANCH=matchstick REPO_INIT_FLAGS='--repo-url=appler:tools/repo.git' ./config.sh -d rk30sdk-kk >> repo.log 2>&1
 
 #source load-config.sh
-BUILD_PROP=$SRC_DIR/device/rockchip/rk3066/rk3066.mk
-$(modify_prop "ro.product.platform" "MATCHSTICK-KK" $BUILD_PROP)
-$(modify_prop "ro.product.version" $DATE_TIME $BUILD_PROP)
+#BUILD_PROP=$SRC_DIR/device/rockchip/rk3066/rk3066.mk
+#$(modify_prop "ro.product.platform" "MATCHSTICK-KK" $BUILD_PROP)
+#$(modify_prop "ro.product.version" $DATE_TIME $BUILD_PROP)
 
 cd $SRC_DIR/device/rockchip/rksdk; git checkout flingone/matchstick-kk-native_flingd_testbuild; cd $SRC_DIR
 
