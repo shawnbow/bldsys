@@ -7,6 +7,7 @@ DATE_TIME=$(date +%Y%m%d%H%M)
 APP_FULL_LOG=$SRC_DIR/build_app.log
 APP_PART_LOG=$SRC_DIR/build_app_part.log
 APP_ERROR_LOG_FILE=$TARGET_BRANCH-build-app-error-$DATE_TIME.log
+DEST_DIR=cm/$TARGET_BRANCH/$DATE_TIME
 
 export USER=it
 export PATH=/opt/android/android-ndk-r9d:/opt/android/adt/sdk/tools:/opt/android/adt/sdk/platform-tools:/opt/android/adt/sdk/build-tools/android-4.4.2:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
@@ -21,8 +22,8 @@ repo sync -d --no-clone-bundle  >> repo.log 2>&1
 
 repo manifest -r -o manifest.xml
 
-[ -z $IS_DEBUG ] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/ &&
-    sudo cp -r $SRC_DIR/manifest.xml /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+[ -z $IS_DEBUG ] && sudo mkdir -p /mnt/public/$DEST_DIR/ &&
+    sudo cp -r $SRC_DIR/manifest.xml /mnt/public/$DEST_DIR/
 
 app_error_log()
 {
@@ -56,9 +57,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-[ -z $IS_DEBUG ] && sudo cp $PROJECT_PATH/bin/$PROJECT_NAME-$BUILD_TYPE.apk /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+[ -z $IS_DEBUG ] && sudo cp $PROJECT_PATH/bin/$PROJECT_NAME-$BUILD_TYPE.apk /mnt/public/$DEST_DIR/
 
-sudo cp $PROJECT_PATH/bin/matchstick-settings-1*.apk /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+sudo cp $PROJECT_PATH/bin/matchstick-settings-1*.apk /mnt/public/$DEST_DIR/
 }
 
 # Library project build
@@ -73,6 +74,6 @@ android_app_build "matchstick-settings" "$SRC_DIR/matchstick-settings-android" "
 android_app_build "fling_videos_sender_android" "$SRC_DIR/fling_videos_sender_android" "debug"
 
 # Javascript compile
-#cd $SRC_DIR && python closure-library/closure/bin/build/closurebuilder.py --root=closure-library/ --root=fling_sdk_receiver_js/project/ --namespace="fling.receiver" --output_mode=compiled --compiler_jar=fling_sdk_receiver_js/compiler.jar --output_file=fling_sdk_receiver_js/project/out/fling_receiver.js && sudo cp $SRC_DIR/fling_sdk_receiver_js/project/out/fling_receiver.js /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+#cd $SRC_DIR && python closure-library/closure/bin/build/closurebuilder.py --root=closure-library/ --root=fling_sdk_receiver_js/project/ --namespace="fling.receiver" --output_mode=compiled --compiler_jar=fling_sdk_receiver_js/compiler.jar --output_file=fling_sdk_receiver_js/project/out/fling_receiver.js && sudo cp $SRC_DIR/fling_sdk_receiver_js/project/out/fling_receiver.js /mnt/public/$DEST_DIR/
 
-[ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/$DATE_TIME/"
+[ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build successfully" "Please get build from http://office.infthink.com/$DEST_DIR/"

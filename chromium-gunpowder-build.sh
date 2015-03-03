@@ -5,6 +5,7 @@ FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
 DATE_TIME=$(date +%Y%m%d%H%M)
 ERROR_LOG_FILE=$TARGET_BRANCH-build-chromium-error-$DATE_TIME.log
+DEST_DIR=cm/$TARGET_BRANCH/$DATE_TIME
 
 export DEPOT_TOOLS_UPDATE=0
 export PATH=/opt/bin:/opt/depot_tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
@@ -15,8 +16,8 @@ cd $SRC_DIR && git reset --hard && git fetch origin && git checkout origin/$TARG
 
 git log > gitlog.txt
 
-[ -z $IS_DEBUG ] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/ &&
-    sudo cp -r $SRC_DIR/gitlog.txt /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+[ -z $IS_DEBUG ] && sudo mkdir -p /mnt/public/$DEST_DIR/ &&
+    sudo cp -r $SRC_DIR/gitlog.txt /mnt/public/$DEST_DIR/
 
 error_log()
 {
@@ -47,7 +48,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-[ -z $IS_DEBUG ] && sudo mkdir -p /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/ &&
-    sudo cp -r $SRC_DIR/src/out/Release/apks/ChromeShell.apk /mnt/public/cm/$TARGET_BRANCH/$DATE_TIME/
+[ -z $IS_DEBUG ] && sudo mkdir -p /mnt/public/$DEST_DIR/ &&
+    sudo cp -r $SRC_DIR/src/out/Release/apks/ChromeShell.apk /mnt/public/$DEST_DIR/
 
-[ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build successfully" "Please get build from http://office.infthink.com/cm/$TARGET_BRANCH/$DATE_TIME/"
+[ -z $IS_DEBUG ] && /opt/tools/bldsys/mailto.py "$TARGET_BRANCH build successfully" "Please get build from http://office.infthink.com/$DEST_DIR/"
