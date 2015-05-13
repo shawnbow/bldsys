@@ -46,7 +46,6 @@ BRANCH=matchstick REPO_INIT_FLAGS='--repo-url=appler:tools/repo.git' ./config.sh
 
 cd $SRC_DIR/kernel; git checkout flingone/demo-remote; cd $SRC_DIR
 cd $SRC_DIR/device/rockchip/rksdk; git checkout flingone/demo-remote; cd $SRC_DIR
-cd $SRC_DIR/frameworks/base/cmds/configd; git checkout flingone/demo-remote; cd $SRC_DIR
 cd $SRC_DIR/gaia; git checkout flingone/demo-remote; cd $SRC_DIR
 
 MAKE_OTAPACKAGE=1 ./build.sh >> $FULL_LOG 2>&1 && ./flash.sh >> $FULL_LOG 2>&1
