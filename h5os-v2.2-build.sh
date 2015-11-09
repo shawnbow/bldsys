@@ -1,6 +1,6 @@
 #!/bin/bash
 TARGET_BUILD="${TARGET_BUILD-flame-f}"
-SRC_DIR=~/data/h5os/$TARGET_BUILD
+SRC_DIR=~/data/build/$TARGET_BUILD
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
 DATE_TIME=$(date +%Y%m%d%H%M)
