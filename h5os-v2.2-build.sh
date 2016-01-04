@@ -12,7 +12,7 @@ export PATH=/home/shawn/bin:/opt/raid/android-sdk-linux/platform-tools:/opt/jdk/
 error_log()
 {
 echo -e "Full log address:\n" >> $PART_LOG
-echo "smb://10.240.18.16/Public/user/shawn/build/log/$ERROR_LOG_FILE" >> $PART_LOG
+echo "smb://share/Public/user/shawn/build/log/$ERROR_LOG_FILE" >> $PART_LOG
 echo -e "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> last 100 lines\n" >> $PART_LOG
 
 tail -n 100 $FULL_LOG >> $PART_LOG
