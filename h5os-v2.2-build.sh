@@ -1,5 +1,5 @@
 #!/bin/bash
-TARGET_BUILD="${TARGET_BUILD-flame-f}"
+TARGET_BUILD="${TARGET_BUILD-octans}"
 SRC_DIR=~/data/build/$TARGET_BUILD
 FULL_LOG=$SRC_DIR/build.log
 PART_LOG=$SRC_DIR/build_part.log
@@ -32,19 +32,15 @@ cp $FULL_LOG /mnt/public/user/shawn/build/log/$ERROR_LOG_FILE
 #sed -i "s/\($PROP_KEY\).*$/\1 = $PROP_VALUE \\\/" $PROP_FILE
 #}
 
-cd $SRC_DIR && rm -rf * || git clone git@git.acadine.com:zhen-bao/h5os.git $SRC_DIR
+cd $SRC_DIR && rm -rf * || git clone git@git.acadine.com:central/h5os.git $SRC_DIR
 cd $SRC_DIR && git reset --hard && git fetch origin && git checkout origin/master
-BRANCH=v2.2 ./config-mirror.sh -d $TARGET_BUILD >> repo.log 2>&1
-
-#BUILD_PROP=$SRC_DIR/device/rockchip/rk3066/rk3066.mk
-#$(modify_prop "ro.product.platform" "MATCHSTICK-KK" $BUILD_PROP)
-#$(modify_prop "ro.product.version" $DATE_TIME $BUILD_PROP)
+BRANCH=v1.0 ./config.sh -d $TARGET_BUILD >> repo.log 2>&1
 
 ./build.sh >> $FULL_LOG 2>&1
 
 if [ $? -ne 0 ]; then
     error_log
-    [ -z $IS_DEBUG ] && ~/data/build/bldsys/mailto.py "$TARGET_BUILD build failed" "Full log address: smb://10.240.18.16/Public/user/shawn/build/log/$ERROR_LOG_FILE" "$PART_LOG"
+    [ -z $IS_DEBUG ] && ~/data/build/bldsys/mailto.py "$TARGET_BUILD build failed" "Full log address: smb://share/Public/user/shawn/build/log/$ERROR_LOG_FILE" "$PART_LOG"
     exit 1
 fi
 
@@ -80,5 +76,5 @@ cd $SRC_DIR && zip -r $TARGET_BUILD-$DATE_TIME.zip flash_images/*
 [ -z $IS_DEBUG ] && mkdir -p /mnt/public/$DEST_DIR/ && 
 cp -r $SRC_DIR/flash_images/manifest.xml $SRC_DIR/$TARGET_BUILD-$DATE_TIME.zip /mnt/public/$DEST_DIR/
 
-[ -z $IS_DEBUG ] && ~/data/build/bldsys/mailto.py "$TARGET_BUILD build successfully" "Please get build from smb://10.240.18.16/Public/$DEST_DIR/"
+[ -z $IS_DEBUG ] && ~/data/build/bldsys/mailto.py "$TARGET_BUILD build successfully" "Please get build from smb://share/Public/$DEST_DIR/"
 
