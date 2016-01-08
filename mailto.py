@@ -11,9 +11,10 @@ from email.mime.multipart import MIMEMultipart
 msg = MIMEMultipart()
 
 mailto_list=["zhen.bao@acadine.com"]
-mail_host="smtp.exmail.qq.com"  #SMTP server
-mail_user="it@infthink.com"     #User
-mail_pass="infthink2014"        #Password
+mail_host="smtp.qq.com"  #SMTP server
+ssl_port=465
+mail_user="acadine@qq.com"     #User
+mail_pass="vjaybhqiewqsibfj"        #Password
 me="Build Daemon"+"<"+mail_user+">"
 
 def send_mail(to_list, sub, content=None, att_path=None):
@@ -32,11 +33,13 @@ def send_mail(to_list, sub, content=None, att_path=None):
     msg['from'] = me
     msg['to'] = ";".join(to_list)
     try:  
-        server = smtplib.SMTP()
-        server.connect(mail_host)
+        server = smtplib.SMTP_SSL('%s:%d' % (mail_host, ssl_port))
+        #server.set_debuglevel(1)
+        #server.ehlo()
+        #server.starttls()
         server.login(mail_user,mail_pass)
         server.sendmail(me, to_list, msg.as_string())
-        server.close()
+        server.quit()
         return True
     except Exception, e:
         print str(e)
